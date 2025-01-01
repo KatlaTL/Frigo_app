@@ -1,5 +1,5 @@
-import { ActivityIndicator, Image, LayoutAnimation, Platform, RefreshControl, ScrollView, SectionList, StyleSheet, Text, TouchableWithoutFeedback, UIManager, View } from "react-native";
-import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
+import { Image, LayoutAnimation, Platform, RefreshControl, ScrollView, SectionList, StyleSheet, Text, TouchableWithoutFeedback, UIManager, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Colors, sharedStyles } from "@assets/styles";
 import { ReducerActionType } from "../history.screen";
 import { CustomBottomSheet } from "@components/custom-bottom-sheet";
@@ -7,7 +7,7 @@ import BottomSheet from "@gorhom/bottom-sheet";
 import { memo, useCallback, useEffect, useMemo, useRef } from "react";
 import { currency, IS_IOS } from "~/constants";
 import { throttle } from "~/utils/debounce";
-import { MemoizedSectionListCollapsableAnimation } from "./section-list-collapsable-animation";
+import { SectionListCollapsableAnimation } from "./section-list-collapsable-animation";
 import { PurchaseHistoryGrouppedByDateType } from "@hooks/use-purchases";
 import { priceFormatter } from "~/utils/numbers";
 import { Gradient } from "@components/gradient";
@@ -80,7 +80,7 @@ export const HistoryScreenPresentation = memo(({ purchaseHistoryState, purchaseH
     * Renders the Section List items with an animated view for the collapse functionality 
     */
     const sectionListFooterItem = useCallback(({ section }: { section: PurchaseHistoryGrouppedByDateType }) => (
-        <MemoizedSectionListCollapsableAnimation section={section} isCollapsed={section.isCollapsed} />
+        <SectionListCollapsableAnimation section={section} isCollapsed={section.isCollapsed} />
     ), [purchaseHistoryState]);
 
     return (

@@ -1,5 +1,5 @@
 import { memo, useEffect, useState } from "react";
-import { LayoutChangeEvent, StyleSheet} from "react-native";
+import { LayoutChangeEvent, StyleSheet } from "react-native";
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated"
 import { MemoizedSectionListItem } from "./section-list-item";
 import { PurchaseHistoryGrouppedByDateType } from "@hooks/use-purchases";
@@ -18,19 +18,27 @@ type SectionListCollapsableAnimationType = {
 export const SectionListCollapsableAnimation = ({ section, isCollapsed }: SectionListCollapsableAnimationType) => {
     const [contentHeight, setContentHeight] = useState<number | null>(null);
     const [measured, setMeasured] = useState(false);
-
+    
     const height = useSharedValue<number | null>(null);
     const opacity = useSharedValue<number>(0);
-
+    
     const onLayout = (event: LayoutChangeEvent) => {
         const { height: layoutHeight } = event.nativeEvent.layout;
-
+        
         if (!measured) {
             setContentHeight(layoutHeight);
             setMeasured(true); // Mark as measured to prevent this function from re-triggering unnecessarily
         }
     };
 
+    // Update the height, with the total item height, if a new item is added to the section
+    useEffect(() => {
+        setMeasured(false);
+        if (height.value !== null) {
+            height.value = height.value + 30;
+        }
+    }, [section.data])
+    
     useEffect(() => {
         if (contentHeight !== null) {
             if (isCollapsed) {
@@ -80,6 +88,6 @@ export const MemoizedSectionListCollapsableAnimation = memo(SectionListCollapsab
 
 const styles = StyleSheet.create({
     sectionItem: {
-        overflow: 'hidden'
+        overflow: 'hidden',
     },
 })
