@@ -9,7 +9,7 @@ import { MaterialTopTabNavigationOptions } from '@react-navigation/material-top-
 import { MaterialTopTabNavigationConfig, MaterialTopTabNavigationEventMap } from '@react-navigation/material-top-tabs/lib/typescript/src/types';
 import { capitalizeText } from '~/utils/strings';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
-import { ProductsTopBarContainer } from '@components/products-top-bar-container';
+import { TopBarContainer } from '@components/top-bar-container';
 import { CarouselClickableIcon } from './_components/carousel-clickable-icon';
 
 type Props = DefaultNavigatorOptions<
@@ -182,7 +182,7 @@ const CarouselTopTabNavigator = ({ initialRouteName, children, screenOptions }: 
 
     return (
         <NavigationContent>
-            <ProductsTopBarContainer>
+            <TopBarContainer>
                 <View style={{ flex: 1, flexDirection: "row", justifyContent: "space-evenly", marginTop: 18 }}>
                     <GestureDetector gesture={panGestureTopCarousel}>
                         <Carousel
@@ -208,7 +208,7 @@ const CarouselTopTabNavigator = ({ initialRouteName, children, screenOptions }: 
                         />
                     </GestureDetector>
                 </View>
-            </ProductsTopBarContainer>
+            </TopBarContainer>
 
             <View style={[styles.productViewCarouselContainer]}>
                 <CarouselClickableIcon

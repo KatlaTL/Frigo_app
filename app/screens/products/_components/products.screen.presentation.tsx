@@ -4,9 +4,8 @@ import { FlatList, RefreshControl, ScrollView, StyleSheet, Text, View } from "re
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ProductItem } from "./product-item";
 import { ProductType } from "@contexts/product.context";
-import { capitalizeText } from "~/utils/strings";
-import { ProductsTopBarContainer } from "@components/products-top-bar-container";
 import { Loading } from "@components/loading";
+import { TopBarTitle } from "@components/top-bar-title";
 
 type ProductsScreenPresentationType = {
     data: (ProductType | { productId: "spacer" })[];
@@ -48,11 +47,7 @@ export const ProductsScreenPresentation = memo(({
     return (
         <>
             {isFavoriteTab && (
-                <ProductsTopBarContainer>
-                    <View style={styles.topBarItem}>
-                        <Text style={styles.topBarItemLabel}>{capitalizeText("Favoritter")}</Text>
-                    </View>
-                </ProductsTopBarContainer>
+                <TopBarTitle title="Favoritter" />
             )}
 
             <SafeAreaView style={sharedStyles.container} edges={['left', 'right']}>
@@ -86,18 +81,6 @@ export const ProductsScreenPresentation = memo(({
 });
 
 const styles = StyleSheet.create({
-    topBarItem: {
-        width: 152,
-        justifyContent: 'center',
-        alignItems: 'center',
-        paddingTop: 0.5,
-        marginTop: 18
-    },
-    topBarItemLabel: {
-        color: Colors.white,
-        fontWeight: "600",
-        fontSize: 17,
-    },
     flatListContainer: {
         paddingHorizontal: 5,
         paddingVertical: 10,

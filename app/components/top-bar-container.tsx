@@ -3,7 +3,7 @@ import { StyleSheet, View } from "react-native"
 import { Gradient } from "./gradient"
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-export const ProductsTopBarContainer = ({ children }: { children: React.ReactNode }) => {
+export const TopBarContainer = ({ children }: { children: React.ReactNode }) => {
     const insets = useSafeAreaInsets();
 
     return (

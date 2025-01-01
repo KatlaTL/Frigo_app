@@ -13,6 +13,7 @@ import { priceFormatter } from "~/utils/numbers";
 import { Gradient } from "@components/gradient";
 import Icon from 'react-native-vector-icons/Entypo';
 import { Loading } from "@components/loading";
+import { TopBarTitle } from "@components/top-bar-title";
 
 // Enable LayoutAnimation on Android
 if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
@@ -85,35 +86,41 @@ export const HistoryScreenPresentation = memo(({ purchaseHistoryState, purchaseH
 
     return (
         <>
-            {/* Adds a gradient to the safearea  */}
-            <Gradient style={{ paddingTop: insets.top }} />
-
             {loading ? (
                 <Loading />
             ) : (
                 purchaseHistoryState.length > 0 ? (
-                    <SectionList
-                        sections={purchaseHistoryState}
-                        overScrollMode="never"
-                        keyExtractor={(item, index) => `${item.receiptTitle}-${index}`}
-                        renderSectionHeader={sectionListHeaderItem}
-                        renderSectionFooter={sectionListFooterItem} // Uses the renderSectionFooter to render all items, as it's the only way to wrap all of the item in on view which is necessary for a smooth collapse/expand animation
-                        renderItem={() => null} // RenderItem is null as it is required. All of the render item logic happends in renderSectionFooter
-                        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={refreshHistory} />}
-                        windowSize={10}
-                        initialNumToRender={10}
-                        maxToRenderPerBatch={5}
-                        showsVerticalScrollIndicator={false}
-                    />
-                ) : (
-                    <View style={styles.emptyListWrapper}>
-                        <ScrollView
-                            contentContainerStyle={[styles.emptyList, IS_IOS && { marginTop: insets.top }]}
+                    <>
+                        {/* Adds a gradient to the safearea  */}
+                        <Gradient style={{ paddingTop: insets.top }} />
+
+                        <SectionList
+                            sections={purchaseHistoryState}
+                            overScrollMode="never"
+                            keyExtractor={(item, index) => `${item.receiptTitle}-${index}`}
+                            renderSectionHeader={sectionListHeaderItem}
+                            renderSectionFooter={sectionListFooterItem} // Uses the renderSectionFooter to render all items, as it's the only way to wrap all of the item in on view which is necessary for a smooth collapse/expand animation
+                            renderItem={() => null} // RenderItem is null as it is required. All of the render item logic happends in renderSectionFooter
                             refreshControl={<RefreshControl refreshing={refreshing} onRefresh={refreshHistory} />}
-                        >
-                            <Text style={styles.emptyListText}>{"Historik er tom"}</Text>
-                        </ScrollView>
-                    </View>
+                            windowSize={10}
+                            initialNumToRender={10}
+                            maxToRenderPerBatch={5}
+                            showsVerticalScrollIndicator={false}
+                        />
+                    </>
+                ) : (
+                    <>
+                        <TopBarTitle title="Historik" />
+
+                        <View style={styles.emptyListWrapper}>
+                            <ScrollView
+                                contentContainerStyle={[styles.emptyList, IS_IOS && { marginTop: insets.top }]}
+                                refreshControl={<RefreshControl refreshing={refreshing} onRefresh={refreshHistory} />}
+                            >
+                                <Text style={styles.emptyListText}>{"Historik er tom"}</Text>
+                            </ScrollView>
+                        </View>
+                    </>
                 )
             )}
 
@@ -190,6 +197,7 @@ const styles = StyleSheet.create({
         color: Colors.white,
         fontSize: 17,
         lineHeight: 20.57,
+        fontWeight: "600",
     },
     overviewDisplay: {
         backgroundColor: Colors.white,
