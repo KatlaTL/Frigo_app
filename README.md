@@ -1,5 +1,5 @@
 
-# Webudvikling bachelor projectt - Frigo
+# Webudvikling bachelor project - Frigo
 This project is the app frontend part of the bachelor project developed by Asger Thorsboe Lundblad in collaboration with the firm Pentia.
 Frigo is an app developed to internal use and its purpose is to purchase small products from the fridge at Pentias workplace.
 The app doesn't do any direct transactions, instead it stores the purchases so Pentia at a later time can subtract the amount from their workers payslips.
