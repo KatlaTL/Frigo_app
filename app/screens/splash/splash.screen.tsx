@@ -6,12 +6,14 @@ import { Colors, sharedStyles } from '@assets/styles';
 import { useLoadingContext } from '@contexts/loading.context';
 import { Gradient } from '@components/gradient';
 import { Logo } from '@components/logo';
+import { useToast } from '@hooks/use-toast';
 
 /**
  * Displays a logo and spinner when App opens (from cold start)
  */
 export const SplashScreen = () => {
   const { load } = useLoadingContext();
+  const toast = useToast();
 
   /**
    * Begin loading at startup
@@ -29,7 +31,7 @@ export const SplashScreen = () => {
     try {
       await load();
     } catch (err) {
-      console.log('beginLoading', err);
+      toast.error({ title: "Noget gik galt. Prøv igen" });
     }
   };
 
