@@ -2,7 +2,7 @@
 # Webudvikling bachelor project - Frigo
 This project is the app frontend part of the bachelor project developed by Asger Thorsboe Lundblad in collaboration with the firm Pentia.
 Frigo is an app developed to internal use and its purpose is to purchase small products from the fridge at Pentias workplace.
-The app doesn't do any direct transactions, instead it stores the purchases so Pentia at a later time can subtract the amount from their workers payslips.
+The app doesn't do any direct transactions, instead it stores the purchases in the database so Pentia at a later time can subtract the amount from their workers payslips.
 
 ## Table of Contents
 
@@ -24,7 +24,7 @@ The app doesn't do any direct transactions, instead it stores the purchases so P
 
 ## Tech Stack
 The app are developed in React Native (without Expo) and Typescript. \
-The backend is developed in NextJS. [The projects backend](https://github.com/KatlaTL/Frigo_backend)
+The backend is developed in NextJS using Prisma to connect to a MySQL database [The projects backend](https://github.com/KatlaTL/Frigo_backend)
 
 ## Run the project
 Follow these steps to run app
