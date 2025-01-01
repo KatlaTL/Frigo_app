@@ -84,7 +84,7 @@ Before running the app make sure you have following setup and installed:
         yarn run ios
         ````
 
-<p align="right">(<a href="#Webudvikling-bachelor-projectt---Frigo">back to top</a>)</p>
+<p align="right">(<a href="#Webudvikling-bachelor-project---Frigo">back to top</a>)</p>
 
 ## Project Structure
 The project structure for the Pentia Mobile Chat app is organized as following:
@@ -227,4 +227,4 @@ app
 9. **`services`Directory** for all services files, used to do HTTP request to the backends API
 10. **`utils` Directory** for all files containing utility functions
 
-<p align="right">(<a href="#Webudvikling-bachelor-projectt---Frigo">back to top</a>)</p>
+<p align="right">(<a href="#Webudvikling-bachelor-project---Frigo">back to top</a>)</p>
