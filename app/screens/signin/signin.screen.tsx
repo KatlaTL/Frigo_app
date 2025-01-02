@@ -20,7 +20,7 @@ import { useToast } from '@hooks/use-toast';
 export const SigninScreen = ({ }: SigninScreenProps) => {
   const { publicAxios } = useAxiosContext();
   const { setCredentials, saveCredentials } = useAuth();
-  
+
   const toast = useToast();
 
   const [email, setEmail] = useState<string>('');
@@ -103,11 +103,9 @@ export const SigninScreen = ({ }: SigninScreenProps) => {
 
                 <TouchableOpacity
                   style={styles.linkViewStyle}
-                  onPress={() =>
-                    Alert.alert('CODE:', '"link to password-reset!"')
-                  }>
+                  onPress={() => toast.error({ title: "Glemt password", message: "ikke implementeret" })}>
                   <Text style={styles.resetPasswordlinkText}>
-                    Forgot?
+                    Glemt?
                   </Text>
                 </TouchableOpacity>
 
@@ -124,15 +122,15 @@ export const SigninScreen = ({ }: SigninScreenProps) => {
 
               <TouchableOpacity
                 style={styles.linkViewStyle}
-                onPress={() => Alert.alert('CODE:', '"link to face-id!"')}>
-                <Text style={styles.faceIdlinkText}>Use Face ID</Text>
-              </TouchableOpacity>
+                onPress={() => toast.error({ title: "FaceID", message: "ikke implementeret" })}>
+              <Text style={styles.faceIdlinkText}>Brug Face ID</Text>
+            </TouchableOpacity>
 
-            </View>
-          </SafeAreaView>
-        </Gradient>
-      </KeyboardAvoidingView>
-    </TouchableWithoutFeedback>
+          </View>
+        </SafeAreaView>
+      </Gradient>
+    </KeyboardAvoidingView>
+    </TouchableWithoutFeedback >
   );
 
 };
