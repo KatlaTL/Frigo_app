@@ -6,7 +6,7 @@ The app doesn't do any direct transactions, instead it stores the purchases in t
 
 This repository only contains the app part. It is necessary to fetch and run the backend for the app to work. The backend can be found in this [repository](https://github.com/KatlaTL/Frigo_backend)
 
-[Watch the demo video](media/demo.mp4)
+[Watch the demo video](media/demo.MOV)
 
 ## Table of Contents
 
