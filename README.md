@@ -4,6 +4,8 @@ This project is the app frontend part of the bachelor project developed by Asger
 Frigo is an app developed to internal use and its purpose is to purchase small products from the fridge at Pentias workplace.
 The app doesn't do any direct transactions, instead it stores the purchases in the database so Pentia at a later time can subtract the amount from their workers payslips.
 
+This repository only contains the app part. It is necessary to fetch and run the backend for the app to work. The backend can be found in this [repository](https://github.com/KatlaTL/Frigo_backend)
+
 ## Table of Contents
 
 <ol>
@@ -87,7 +89,7 @@ Before running the app make sure you have following setup and installed:
 <p align="right">(<a href="#Webudvikling-bachelor-project---Frigo">back to top</a>)</p>
 
 ## Project Structure
-The project structure for the Pentia Mobile Chat app is organized as following:
+The project structure for the Frigo app is organized as following:
 ```
 app
 ├── App.tsx
