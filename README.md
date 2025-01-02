@@ -1,5 +1,5 @@
 
-# Webudvikling bachelor project - Frigo
+# Webudvikling bachelor project - Frigo App
 This project is the app frontend part of the bachelor project developed by Asger Thorsboe Lundblad in collaboration with the firm Pentia.
 Frigo is an app developed to internal use and its purpose is to purchase small products from the fridge at Pentias workplace.
 The app doesn't do any direct transactions, instead it stores the purchases in the database so Pentia at a later time can subtract the amount from their workers payslips.
@@ -88,7 +88,7 @@ Before running the app make sure you have following setup and installed:
         yarn run ios
         ````
 
-<p align="right">(<a href="#Webudvikling-bachelor-project---Frigo">back to top</a>)</p>
+<p align="right">(<a href="#Webudvikling-bachelor-project---Frigo-App">back to top</a>)</p>
 
 ## Project Structure
 The project structure for the Frigo app is organized as following:
@@ -231,4 +231,4 @@ app
 9. **`services`Directory** for all services files, used to do HTTP request to the backends API
 10. **`utils` Directory** for all files containing utility functions
 
-<p align="right">(<a href="#Webudvikling-bachelor-project---Frigo">back to top</a>)</p>
+<p align="right">(<a href="#Webudvikling-bachelor-project---Frigo-App">back to top</a>)</p>
