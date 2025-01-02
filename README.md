@@ -26,7 +26,7 @@ This repository only contains the app part. It is necessary to fetch and run the
 
 ## Tech Stack
 The app are developed in React Native (without Expo) and Typescript. \
-The backend is developed in NextJS using Prisma to connect to a MySQL database [The projects backend](https://github.com/KatlaTL/Frigo_backend)
+The backend is developed in NextJS using Prisma ORM to connect to a MySQL database [The projects backend](https://github.com/KatlaTL/Frigo_backend)
 
 ## Run the project
 Follow these steps to run app
