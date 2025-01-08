@@ -11,6 +11,7 @@ import { capitalizeText } from '~/utils/strings';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import { TopBarContainer } from '@components/top-bar-container';
 import { CarouselClickableIcon } from './_components/carousel-clickable-icon';
+import { AnimatedDotIndicators } from './_components/animated-dot-indicators';
 
 type Props = DefaultNavigatorOptions<
     ParamListBase,
@@ -210,56 +211,70 @@ const CarouselTopTabNavigator = ({ initialRouteName, children, screenOptions }: 
                 </View>
             </TopBarContainer>
 
-            <View style={[styles.productViewCarouselContainer]}>
-                <CarouselClickableIcon
-                    iconName='chevron-thin-left'
-                    onPress={() => {
-                        refScreenView.current?.prev();
-                        setShouldAnimateTopBar(true);
-                    }}
-                />
+            <View style={{ flex: 1 }}>
+                <View style={styles.productViewCarouselContainer}>
 
-                <GestureDetector gesture={panGestureViewCarousel}>
-                    <Carousel
-                        ref={refScreenView}
-                        data={state.routes}
-                        renderItem={productViewCarouselItem}
-                        scrollAnimationDuration={500}
-                        width={width - 45}
-                        onSnapToItem={(index) => {
-                            if (activeCarousel === refScreenView) {
-                                onChangeIndex(index);
-                            }
+                    <CarouselClickableIcon
+                        iconName='chevron-thin-left'
+                        onPress={() => {
+                            refScreenView.current?.prev();
+                            setShouldAnimateTopBar(true);
                         }}
-                        onProgressChange={(_, absolute) => {
-                            if (activeCarousel === refScreenView || shouldAnimateTopBar) {
-                                refTab.current?.scrollTo({
-                                    index: absolute
-                                })
-                            }
-                        }}
-                        pagingEnabled={false}
-                        snapEnabled={true}
                     />
-                </GestureDetector>
 
-                <CarouselClickableIcon
-                    iconName='chevron-thin-right'
-                    onPress={() => {
-                        refScreenView.current?.next();
-                        setShouldAnimateTopBar(true);
-                    }}
-                />
+                    <GestureDetector gesture={panGestureViewCarousel}>
+                        <Carousel
+                            ref={refScreenView}
+                            data={state.routes}
+                            renderItem={productViewCarouselItem}
+                            scrollAnimationDuration={500}
+                            width={width - 45}
+                            onSnapToItem={(index) => {
+                                if (activeCarousel === refScreenView) {
+                                    onChangeIndex(index);
+                                }
+                            }}
+                            onProgressChange={(_, absolute) => {
+                                if (activeCarousel === refScreenView || shouldAnimateTopBar) {
+                                    refTab.current?.scrollTo({
+                                        index: absolute
+                                    })
+                                }
+                            }}
+                            pagingEnabled={false}
+                            snapEnabled={true}
+                        />
+                    </GestureDetector>
+
+                    <CarouselClickableIcon
+                        iconName='chevron-thin-right'
+                        onPress={() => {
+                            refScreenView.current?.next();
+                            setShouldAnimateTopBar(true);
+                        }}
+                    />
+
+                </View>
+
+                <View style={{ flex: 1, alignItems: "center", paddingVertical: 2 }}>
+                    <AnimatedDotIndicators
+                        length={state.routes.length}
+                        currentIndex={activeIndex}
+                        carouselScreenRef={refScreenView}
+                        setCurrentIndex={setActiveIndex}
+                    />
+                </View>
             </View>
+
         </NavigationContent>
     )
 }
 
 const styles = StyleSheet.create({
     productViewCarouselContainer: {
-        flex: 1,
+        flex: 30,
         flexDirection: "row",
-        justifyContent: "center"
+        justifyContent: "center",
     },
     tabBarCarouselItem: {
         paddingTop: 0.5,
