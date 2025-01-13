@@ -42,6 +42,7 @@ const CarouselTopTabNavigator = ({ initialRouteName, children, screenOptions }: 
     const [activeIndex, setActiveIndex] = useState<number>(0);
     const [activeCarousel, setActiveCarousel] = useState<React.RefObject<ICarouselInstance> | null>(null);
     const [shouldAnimateTopBar, setShouldAnimateTopBar] = useState<boolean>(false);
+    const [absoluteIndex, setAbsoluteIndex] = useState<number>(0);
 
     const width = Dimensions.get('window').width;
 
@@ -240,6 +241,7 @@ const CarouselTopTabNavigator = ({ initialRouteName, children, screenOptions }: 
                                         index: absolute
                                     })
                                 }
+                                setAbsoluteIndex(absolute);
                             }}
                             pagingEnabled={false}
                             snapEnabled={true}
@@ -261,7 +263,9 @@ const CarouselTopTabNavigator = ({ initialRouteName, children, screenOptions }: 
                         length={state.routes.length}
                         currentIndex={activeIndex}
                         carouselScreenRef={refScreenView}
-                        setCurrentIndex={setActiveIndex}
+                        abosuluteIndex={absoluteIndex}
+                        goToIndex={goToIndex}
+                        setActiveCarousel={setActiveCarousel}
                     />
                 </View>
             </View>
