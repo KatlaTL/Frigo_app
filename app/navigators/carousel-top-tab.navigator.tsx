@@ -1,10 +1,10 @@
 
-import { View, TouchableOpacity, StyleSheet, Dimensions, Text } from 'react-native';
+import { View, StyleSheet, Dimensions, Text, Pressable } from 'react-native';
 import { useNavigationBuilder, TabRouter, createNavigatorFactory, DefaultNavigatorOptions, ParamListBase, TabNavigationState, TabRouterOptions, TabActionHelpers } from '@react-navigation/native';
 import { Colors } from '@assets/styles';
 import Carousel from 'react-native-reanimated-carousel';
 import type { ICarouselInstance } from 'react-native-reanimated-carousel';
-import { useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { MaterialTopTabNavigationOptions } from '@react-navigation/material-top-tabs';
 import { MaterialTopTabNavigationConfig, MaterialTopTabNavigationEventMap } from '@react-navigation/material-top-tabs/lib/typescript/src/types';
 import { capitalizeText } from '~/utils/strings';
@@ -43,6 +43,7 @@ const CarouselTopTabNavigator = ({ initialRouteName, children, screenOptions }: 
     const [activeCarousel, setActiveCarousel] = useState<React.RefObject<ICarouselInstance> | null>(null);
     const [shouldAnimateTopBar, setShouldAnimateTopBar] = useState<boolean>(false);
     const [absoluteIndex, setAbsoluteIndex] = useState<number>(0);
+    const [isPanning, setIsPanning] = useState<boolean>(false);
 
     const width = Dimensions.get('window').width;
 
@@ -121,12 +122,12 @@ const CarouselTopTabNavigator = ({ initialRouteName, children, screenOptions }: 
      * @param index - The new active index
      */
     const onChangeIndex = (index: number): void => {
-        setActiveIndex(index);
-
+        setActiveIndex(() => index);
     }
 
     /**
      * Check if the provided index is equaly to the current index
+     * Round to nearest integer a the refScreenView index can be an absolute value
      * @param index Index to compare with
      * @returns boolean
      */
@@ -134,16 +135,18 @@ const CarouselTopTabNavigator = ({ initialRouteName, children, screenOptions }: 
         if (!refScreenView.current?.getCurrentIndex()) {
             return index === state.index;
         }
-        return refScreenView.current?.getCurrentIndex() === index;
-    };
+        return Math.round(refScreenView.current?.getCurrentIndex()) === index;
+    }
 
     /**
      * The Tab Bar Carousel Render Item
      */
-    const tabBarCarouselItem = ({ item, index }: { item: typeof state.routes[0], index: number }) => {
+    const tabBarCarouselItem = useCallback(({ item, index }: { item: typeof state.routes[0], index: number }) => {
         return (
-            <TouchableOpacity
+            <Pressable
                 onPress={() => {
+                    if (isPanning) return;
+
                     goToIndex(index, refScreenView.current);
                     setShouldAnimateTopBar(true);
                 }}
@@ -152,29 +155,41 @@ const CarouselTopTabNavigator = ({ initialRouteName, children, screenOptions }: 
                 <View style={styles.tabBarCarouselItem}>
                     <Text style={[styles.tabBarCarouselItemLabel, { opacity: isActive(index) ? 1 : 0.6 }]}>{capitalizeText(descriptors[item.key].options.title ?? item.name)}</Text>
                 </View>
-            </TouchableOpacity>
+            </Pressable>
         )
-    }
+    }, [goToIndex, setShouldAnimateTopBar, isActive, capitalizeText])
 
     /**
      * The Product View Carousel Render Item
      */
-    const productViewCarouselItem = ({ item }: { item: typeof state.routes[0] }) => {
+    const productViewCarouselItem = useCallback(({ item }: { item: typeof state.routes[0] }) => {
         return (
             <View style={{ flex: 1 }}>
                 {descriptors[item.key].render()}
             </View>
         )
-    }
+    }, [descriptors])
 
     // Pan gesture to detect when the user interact with the top tab carousel
     const panGestureTopCarousel = Gesture.Pan()
         .runOnJS(true)
+        .minDistance(10)
         .onBegin(() => {
             setActiveCarousel(refTab);
             setShouldAnimateTopBar(false);
         })
-        .onEnd(() => setActiveCarousel(null));
+        .onTouchesDown(() => {
+            setIsPanning(false); // Sets the isPanning to false on touch down to stop it from preventing the tabBarCarouselItem onPress
+        })
+        .onTouchesMove(() => {
+            if (!isPanning) {
+                setIsPanning(true);
+            }
+        })
+        .onEnd(() => {
+            setActiveCarousel(null);
+            setIsPanning(false);
+        })
 
     // Pan gesture to detect when the user interact with the screen view carousel
     const panGestureViewCarousel = Gesture.Pan()
@@ -241,7 +256,7 @@ const CarouselTopTabNavigator = ({ initialRouteName, children, screenOptions }: 
                                         index: absolute
                                     })
                                 }
-                                setAbsoluteIndex(absolute);
+                                setAbsoluteIndex(() => absolute);
                             }}
                             pagingEnabled={false}
                             snapEnabled={true}

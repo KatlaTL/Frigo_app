@@ -9,4 +9,5 @@ export const Colors = {
   black: '#000000',
   primary: '#001847',
   secondary: '#0667fd',
+  transparent: "transparent"
 };

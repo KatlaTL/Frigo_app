@@ -1,8 +1,8 @@
 import { Colors } from "@assets/styles";
 import { useCallback, useEffect, useMemo } from "react";
-import { Dimensions, FlatList, ListRenderItem, StyleSheet, TouchableOpacity, View } from "react-native";
+import { Dimensions, ListRenderItem, Pressable, StyleSheet, View } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
-import Animated, { interpolate, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
+import Animated, { Easing, interpolate, interpolateColor, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 import { ICarouselInstance } from "react-native-reanimated-carousel";
 
 type AnimatedDotIndicatorsTypes = {
@@ -23,6 +23,7 @@ export const AnimatedDotIndicators = ({ length, currentIndex, carouselScreenRef,
     const emptyData = Array.from({ length }, (_, index) => ({ id: index }));
 
     const iconSize = useSharedValue<number>(7);
+    const backgroundColorAnimation = useSharedValue<number>(0);
 
     /**
      * The onPress even for the dot indicators
@@ -67,8 +68,10 @@ export const AnimatedDotIndicators = ({ length, currentIndex, carouselScreenRef,
     const panGesture = Gesture.Pan()
         // Run on the JS thread rather than the UI thread to ensure that the code can run JavaScript specific functions like setCurrentIndex()
         .runOnJS(true)
+        .minDistance(10)
         .hitSlop({ top: 50, bottom: 50, left: 50, right: 50 })
         .shouldCancelWhenOutside(true)
+        .onBegin(() => setActiveCarousel(carouselScreenRef))
         .onUpdate((event) => {
             // Find correct index based on the drag x value
             const matchedRange = ranges.find(range => event.x >= range.start && event.x <= range.end);
@@ -76,9 +79,13 @@ export const AnimatedDotIndicators = ({ length, currentIndex, carouselScreenRef,
             if (matchedRange) {
                 carouselScreenRef.current?.scrollTo({ index: matchedRange.index });
             }
-            
-            setActiveCarousel(carouselScreenRef);
         })
+        .onStart(() => backgroundColorAnimation.value = withTiming(1, { duration: 200, easing: Easing.linear }))
+        .onTouchesUp(() => backgroundColorAnimation.value = withTiming(0, { duration: 200, easing: Easing.linear }))
+        .onEnd(() => {
+            setActiveCarousel(null);
+            backgroundColorAnimation.value = withTiming(0, { duration: 200, easing: Easing.linear });
+        });
 
     // Animated style for the icon wrapper
     const animatedIconWrapperStyle = useAnimatedStyle(() => ({
@@ -110,31 +117,37 @@ export const AnimatedDotIndicators = ({ length, currentIndex, carouselScreenRef,
         height: iconSize.value
     }))
 
+    // Animated style for the background
+    const animatedBackgroundStyle = useAnimatedStyle(() => {
+        return {
+            backgroundColor: interpolateColor(
+                backgroundColorAnimation.value,
+                [0, 1],
+                [Colors.transparent, Colors.secondary + "20"]
+            ),
+            borderRadius: 10,
+        }
+    })
+
     /**
      * The renderItem of the FlatList
      */
     const renderItem: ListRenderItem<{ id: number }> = useCallback(({ item, index }) => (
-        <TouchableOpacity
+        <Pressable
             style={style.iconWrapper}
             onPress={() => onDotPress(index)}
+            onLongPress={() => backgroundColorAnimation.value = withTiming(1, { duration: 200, easing: Easing.linear })}
         >
-            <Animated.View style={[{
-                width: 7,
-                height: 7,
-                borderWidth: 1,
-                borderRadius: 30,
-                borderColor: Colors.secondary,
-                backgroundColor: Colors.secondary
-            }, index === currentIndex && animatedIconSizeStyle]} />
-        </TouchableOpacity>
+            <Animated.View style={[style.dot, index === currentIndex && animatedIconSizeStyle]} />
+        </Pressable>
     ), [currentIndex, animatedIconSizeStyle, onDotPress]);
 
     return (
         <View style={style.container}>
-            <GestureDetector gesture={panGesture}>
-                <>
-                    <FlatList
-                        style={style.dotIndicators}
+            <>
+                <GestureDetector gesture={panGesture}>
+                    <Animated.FlatList
+                        style={[style.dotIndicators, animatedBackgroundStyle]}
                         data={emptyData}
                         renderItem={renderItem}
                         horizontal
@@ -142,19 +155,12 @@ export const AnimatedDotIndicators = ({ length, currentIndex, carouselScreenRef,
                         scrollEnabled={false}
                         extraData={currentIndex}
                     />
+                </GestureDetector>
 
-                    <Animated.View style={[style.iconWrapper, { position: "absolute" }, animatedIconWrapperStyle]}>
-                        <Animated.View style={[{
-                            borderWidth: 1,
-                            borderRadius: 30,
-                            borderColor: Colors.secondary,
-                            backgroundColor: Colors.secondary,
-                            height: 10,
-                            width: 10,
-                        }, animatedIconStyle]} />
-                    </Animated.View>
-                </>
-            </GestureDetector>
+                <Animated.View style={[style.iconWrapper, { position: "absolute" }, animatedIconWrapperStyle]}>
+                    <Animated.View style={[style.animatedDot, animatedIconStyle]} />
+                </Animated.View>
+            </>
         </View>
     )
 }
@@ -171,5 +177,22 @@ const style = StyleSheet.create({
         height: 20,
         justifyContent: "center",
         alignItems: "center",
+        zIndex: -10
     },
+    dot: {
+        width: 7,
+        height: 7,
+        borderWidth: 1,
+        borderRadius: 30,
+        borderColor: Colors.secondary,
+        backgroundColor: Colors.secondary
+    },
+    animatedDot: {
+        borderWidth: 1,
+        borderRadius: 30,
+        borderColor: Colors.secondary,
+        backgroundColor: Colors.secondary,
+        height: 10,
+        width: 10,
+    }
 })
