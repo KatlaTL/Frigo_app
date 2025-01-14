@@ -171,9 +171,6 @@ const style = StyleSheet.create({
         width: width,
         alignItems: "center"
     },
-    dotIndicators: {
-        // alignSelf: "center",
-    },
     iconWrapper: {
         width: dotIndicatorWidth,
         height: 20,
