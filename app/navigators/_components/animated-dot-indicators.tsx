@@ -147,7 +147,7 @@ export const AnimatedDotIndicators = ({ length, currentIndex, carouselScreenRef,
             <>
                 <GestureDetector gesture={panGesture}>
                     <Animated.FlatList
-                        style={[style.dotIndicators, animatedBackgroundStyle]}
+                        style={animatedBackgroundStyle}
                         data={emptyData}
                         renderItem={renderItem}
                         horizontal
