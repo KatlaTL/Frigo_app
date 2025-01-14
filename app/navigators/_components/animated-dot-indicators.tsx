@@ -23,6 +23,7 @@ export const AnimatedDotIndicators = ({ length, currentIndex, carouselScreenRef,
     const emptyData = Array.from({ length }, (_, index) => ({ id: index }));
 
     const iconSize = useSharedValue<number>(7);
+    const iconOpacity = useSharedValue<number>(0.6);
     const backgroundColorAnimation = useSharedValue<number>(0);
 
     /**
@@ -58,9 +59,11 @@ export const AnimatedDotIndicators = ({ length, currentIndex, carouselScreenRef,
             (currentIndex === 0 && abosuluteIndex > length - 0.5);
 
         const targetSize = withInIndex ? 10 : 7;
+        const targetOpacity = withInIndex ? 1 : 0.6;
 
         if (iconSize.value != targetSize) {
             iconSize.value = withTiming(targetSize, { duration: 200 });
+            iconOpacity.value = withTiming(targetOpacity, { duration: 200 });
         }
     }, [abosuluteIndex, currentIndex]);
 
@@ -114,7 +117,8 @@ export const AnimatedDotIndicators = ({ length, currentIndex, carouselScreenRef,
     // Animated style for the icon size
     const animatedIconSizeStyle = useAnimatedStyle(() => ({
         width: iconSize.value,
-        height: iconSize.value
+        height: iconSize.value,
+        opacity: iconOpacity.value
     }))
 
     // Animated style for the background
@@ -184,7 +188,8 @@ const style = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 30,
         borderColor: Colors.secondary,
-        backgroundColor: Colors.secondary
+        backgroundColor: Colors.secondary,
+        opacity: 0.6
     },
     animatedDot: {
         borderWidth: 1,
