@@ -273,16 +273,18 @@ const CarouselTopTabNavigator = ({ initialRouteName, children, screenOptions }: 
 
                 </View>
 
-                <View style={{ flex: 1, alignItems: "center", paddingVertical: 2 }}>
-                    <AnimatedDotIndicators
-                        length={state.routes.length}
-                        currentIndex={activeIndex}
-                        carouselScreenRef={refScreenView}
-                        abosuluteIndex={absoluteIndex}
-                        goToIndex={goToIndex}
-                        setActiveCarousel={setActiveCarousel}
-                    />
-                </View>
+                {state.routes.length > 1 && (
+                    <View style={{ flex: 1, alignItems: "center", paddingVertical: 2 }}>
+                        <AnimatedDotIndicators
+                            length={state.routes.length}
+                            currentIndex={activeIndex}
+                            carouselScreenRef={refScreenView}
+                            abosuluteIndex={absoluteIndex}
+                            goToIndex={goToIndex}
+                            setActiveCarousel={setActiveCarousel}
+                        />
+                    </View>
+                )}
             </View>
 
         </NavigationContent>

@@ -16,7 +16,7 @@ type AnimatedDotIndicatorsTypes = {
 
 type ranges = { start: number, end: number, index: number }[];
 
-const width = Dimensions.get("screen").width / 2;
+const width = Dimensions.get("screen").width;
 const dotIndicatorWidth = 40;
 
 export const AnimatedDotIndicators = ({ length, currentIndex, carouselScreenRef, abosuluteIndex = 0, goToIndex, setActiveCarousel }: AnimatedDotIndicatorsTypes) => {
@@ -157,7 +157,8 @@ export const AnimatedDotIndicators = ({ length, currentIndex, carouselScreenRef,
                     />
                 </GestureDetector>
 
-                <Animated.View style={[style.iconWrapper, { position: "absolute" }, animatedIconWrapperStyle]}>
+                {/* Calculate the position for the animated dot based on the flatlist length */}
+                <Animated.View style={[style.iconWrapper, { bottom: 20, marginRight: 40 * (length - 1) }, animatedIconWrapperStyle]}>
                     <Animated.View style={[style.animatedDot, animatedIconStyle]} />
                 </Animated.View>
             </>
@@ -168,9 +169,10 @@ export const AnimatedDotIndicators = ({ length, currentIndex, carouselScreenRef,
 const style = StyleSheet.create({
     container: {
         width: width,
+        alignItems: "center"
     },
     dotIndicators: {
-        alignSelf: "center",
+        // alignSelf: "center",
     },
     iconWrapper: {
         width: dotIndicatorWidth,
