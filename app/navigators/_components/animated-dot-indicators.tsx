@@ -73,7 +73,7 @@ export const AnimatedDotIndicators = ({ length, currentIndex, carouselScreenRef,
         .shouldCancelWhenOutside(true)
         .onBegin(() => setActiveCarousel(carouselScreenRef))
         .onUpdate((event) => {
-            // Find correct index based on the drag x value
+            // Find the correct index based on the drag x value
             const matchedRange = ranges.find(range => event.x >= range.start && event.x <= range.end);
 
             if (matchedRange) {
