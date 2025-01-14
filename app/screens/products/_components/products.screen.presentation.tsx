@@ -61,7 +61,7 @@ export const ProductsScreenPresentation = memo(({
                             keyExtractor={item => item.productId.toString()}
                             numColumns={2}
                             columnWrapperStyle={{ justifyContent: 'space-between', columnGap: 10 }}
-                            contentContainerStyle={[styles.flatListContainer, isFavoriteTab && { marginHorizontal: 22.5 }]}
+                            contentContainerStyle={styles.flatListContainer}
                             renderItem={flatListRenderItem}
                             refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
                             showsVerticalScrollIndicator={false}
@@ -82,7 +82,7 @@ export const ProductsScreenPresentation = memo(({
 
 const styles = StyleSheet.create({
     flatListContainer: {
-        paddingHorizontal: 5,
+        paddingHorizontal: 15,
         paddingVertical: 10,
         paddingTop: 20
     },

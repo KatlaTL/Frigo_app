@@ -10,7 +10,6 @@ import { MaterialTopTabNavigationConfig, MaterialTopTabNavigationEventMap } from
 import { capitalizeText } from '~/utils/strings';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import { TopBarContainer } from '@components/top-bar-container';
-import { CarouselClickableIcon } from './_components/carousel-clickable-icon';
 import { AnimatedDotIndicators } from './_components/animated-dot-indicators';
 
 type Props = DefaultNavigatorOptions<
@@ -229,22 +228,13 @@ const CarouselTopTabNavigator = ({ initialRouteName, children, screenOptions }: 
 
             <View style={{ flex: 1 }}>
                 <View style={styles.productViewCarouselContainer}>
-
-                    <CarouselClickableIcon
-                        iconName='chevron-thin-left'
-                        onPress={() => {
-                            refScreenView.current?.prev();
-                            setShouldAnimateTopBar(true);
-                        }}
-                    />
-
                     <GestureDetector gesture={panGestureViewCarousel}>
                         <Carousel
                             ref={refScreenView}
                             data={state.routes}
                             renderItem={productViewCarouselItem}
                             scrollAnimationDuration={500}
-                            width={width - 45}
+                            width={width}
                             onSnapToItem={(index) => {
                                 if (activeCarousel === refScreenView) {
                                     onChangeIndex(index);
@@ -262,15 +252,6 @@ const CarouselTopTabNavigator = ({ initialRouteName, children, screenOptions }: 
                             snapEnabled={true}
                         />
                     </GestureDetector>
-
-                    <CarouselClickableIcon
-                        iconName='chevron-thin-right'
-                        onPress={() => {
-                            refScreenView.current?.next();
-                            setShouldAnimateTopBar(true);
-                        }}
-                    />
-
                 </View>
 
                 {state.routes.length > 1 && (
