@@ -158,7 +158,7 @@ export const AnimatedDotIndicators = ({ length, currentIndex, carouselScreenRef,
                 </GestureDetector>
 
                 {/* Calculate the position for the animated dot based on the flatlist length */}
-                <Animated.View style={[style.iconWrapper, { bottom: 20, marginRight: 40 * (length - 1) }, animatedIconWrapperStyle]}>
+                <Animated.View style={[style.iconWrapper, { bottom: 20, marginRight: dotIndicatorWidth * (length - 1) }, animatedIconWrapperStyle]}>
                     <Animated.View style={[style.animatedDot, animatedIconStyle]} />
                 </Animated.View>
             </>
