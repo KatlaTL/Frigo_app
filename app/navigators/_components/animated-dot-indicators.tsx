@@ -17,7 +17,7 @@ type AnimatedDotIndicatorsTypes = {
 type ranges = { start: number, end: number, index: number }[];
 
 const width = Dimensions.get("screen").width;
-const dotIndicatorWidth = 40;
+const dotIndicatorWidth = 30;
 
 export const AnimatedDotIndicators = ({ length, currentIndex, carouselScreenRef, abosuluteIndex = 0, goToIndex, setActiveCarousel }: AnimatedDotIndicatorsTypes) => {
     const emptyData = Array.from({ length }, (_, index) => ({ id: index }));
