@@ -49,7 +49,7 @@ export const AnimatedDotIndicators = ({ length, currentIndex, carouselScreenRef,
     ), [length]);
 
     const interpolateOutputArr = useMemo(() => (
-        (emptyData.map(() => [10, dotIndicatorWidth / 2, 10]).flat())
+        (emptyData.map(() => [10, dotIndicatorWidth / 1.5, 10]).flat())
     ), [length]);
 
     // Calculate the iconSize based on whether the absouluteIndex is within range of the currentIndex 
@@ -148,24 +148,22 @@ export const AnimatedDotIndicators = ({ length, currentIndex, carouselScreenRef,
 
     return (
         <View style={style.container}>
-            <>
-                <GestureDetector gesture={panGesture}>
-                    <Animated.FlatList
-                        style={animatedBackgroundStyle}
-                        data={emptyData}
-                        renderItem={renderItem}
-                        horizontal
-                        keyExtractor={(item) => item.id.toString()}
-                        scrollEnabled={false}
-                        extraData={currentIndex}
-                    />
-                </GestureDetector>
+            <GestureDetector gesture={panGesture}>
+                <Animated.FlatList
+                    style={animatedBackgroundStyle}
+                    data={emptyData}
+                    renderItem={renderItem}
+                    horizontal
+                    keyExtractor={(item) => item.id.toString()}
+                    scrollEnabled={false}
+                    extraData={currentIndex}
+                />
+            </GestureDetector>
 
-                {/* Calculate the position for the animated dot based on the flatlist length */}
-                <Animated.View style={[style.iconWrapper, { bottom: 20, marginRight: dotIndicatorWidth * (length - 1) }, animatedIconWrapperStyle]}>
-                    <Animated.View style={[style.animatedDot, animatedIconStyle]} />
-                </Animated.View>
-            </>
+            {/* Calculate the position for the animated dot based on the flatlist length */}
+            <Animated.View style={[style.iconWrapper, { bottom: 20, marginRight: dotIndicatorWidth * (length - 1) }, animatedIconWrapperStyle]}>
+                <Animated.View style={[style.animatedDot, animatedIconStyle]} />
+            </Animated.View>
         </View>
     )
 }
