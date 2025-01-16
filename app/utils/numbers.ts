@@ -9,7 +9,7 @@ export const priceFormatter = (number: number | string, currency?: string) => {
     // Return an error
     if (number === undefined || number === null) {
         console.error('Invalid number or string, please check your input for possible null or undefined');
-        return;
+        return "";
     }
     
     const convertedNumber = Number(number);

@@ -7,6 +7,8 @@ import { usePurchases } from "@hooks/use-purchases";
 import { useToast } from "@hooks/use-toast";
 import { useMutation } from "@tanstack/react-query";
 import { useProducts } from "@hooks/use-products";
+import { priceFormatter } from "~/utils/numbers";
+import { currency } from "~/constants";
 
 
 export const ProductBottomSheet = () => {
@@ -15,6 +17,7 @@ export const ProductBottomSheet = () => {
     const toast = useToast();
 
     const [quantity, setQuantity] = useState<number>(1);
+    const [totalPrice, setTotalPrice] = useState<number>(0);
     const [disableDecrement, setDisableDecrement] = useState<boolean>(false);
     const [disableIncrement, setDisableIncrement] = useState<boolean>(false);
 
@@ -28,6 +31,14 @@ export const ProductBottomSheet = () => {
             productBottomSheetRef.current?.expand();
         }
     }, [currentProduct])
+
+    useEffect(() => {
+        const parsedPrice = Number(currentProduct?.price)
+
+        if (!isNaN(parsedPrice)) {
+            setTotalPrice(parsedPrice * quantity);
+        }
+    }, [quantity, currentProduct])
 
     /**
      * Purchase a product.
@@ -148,7 +159,7 @@ export const ProductBottomSheet = () => {
 
                 <RenderSlideButton
                     onSliderComplete={() => purchaseMutation.mutateAsync()}
-                    slideBarText="Køb"
+                    slideBarText={`Køb: ${priceFormatter(totalPrice, currency)}`}
                 />
             </View>
         </CustomBottomSheet>
@@ -162,7 +173,6 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         fontSize: 48,
         lineHeight: 58,
-        letterSpacing: -0.54,
         color: Colors.white,
         marginHorizontal: 32,
     },
@@ -178,7 +188,6 @@ const styles = StyleSheet.create({
         bottom: 55,
         fontSize: 26,
         lineHeight: 24.4,
-        letterSpacing: -0.54,
         textAlign: 'center',
         maxWidth: 260,
     },
