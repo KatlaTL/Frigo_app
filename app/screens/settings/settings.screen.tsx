@@ -6,6 +6,7 @@ import { Button } from '@components/button';
 import { useAuth } from '@hooks/use-auth';
 import { BottomTabScreenProps } from '@navigators/types';
 import { useAxiosContext } from '@contexts/axios.context';
+import { TopBarTitle } from '@components/top-bar-title';
 
 /**
  * Displays Settings Screen
@@ -15,13 +16,17 @@ export const SettingsScreen = ({ navigation }: BottomTabScreenProps<'SettingsTab
   const { publicAxios } = useAxiosContext();
 
   return (
-    <SafeAreaView style={[sharedStyles.container, { backgroundColor: Colors.background }]} edges={['top']}>
-      <View style={styles.content}>
-        <Button color="primary" onPress={() => signOut(publicAxios)}>
-          Log ud
-        </Button>
-      </View>
-    </SafeAreaView>
+    <>
+      <TopBarTitle title="Settings" />
+
+      <SafeAreaView style={[sharedStyles.container, { backgroundColor: Colors.background }]} edges={['top']}>
+        <View style={styles.content}>
+          <Button color="primary" onPress={() => signOut(publicAxios)}>
+            Log ud
+          </Button>
+        </View>
+      </SafeAreaView>
+    </>
   );
 };
 
