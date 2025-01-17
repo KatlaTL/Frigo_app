@@ -27,7 +27,7 @@ export const AnimatedDotIndicators = ({ length, currentIndex, carouselScreenRef,
     const backgroundColorAnimation = useSharedValue<number>(0);
 
     /**
-     * The onPress even for the dot indicators
+     * The onPress event for the dot indicators
      */
     const onDotPress = (index: number) => {
         goToIndex(index, carouselScreenRef.current);
