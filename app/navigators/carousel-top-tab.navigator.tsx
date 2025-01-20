@@ -255,7 +255,7 @@ const CarouselTopTabNavigator = ({ initialRouteName, children, screenOptions }: 
                 </View>
 
                 {state.routes.length > 1 && (
-                    <View style={{ flex: 1, alignItems: "center", paddingVertical: 2 }}>
+                    <View style={styles.pageControl}>
                         <AnimatedDotIndicators
                             length={state.routes.length}
                             currentIndex={activeIndex}
@@ -290,6 +290,11 @@ const styles = StyleSheet.create({
         fontWeight: "600",
         fontSize: 17,
     },
+    pageControl: {
+        flex: 1,
+        alignItems: "center",
+        paddingVertical: 2
+    }
 });
 
 export const createCarouselTopTabNavigator = createNavigatorFactory(CarouselTopTabNavigator);
