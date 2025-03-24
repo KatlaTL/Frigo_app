@@ -6,7 +6,7 @@ The app doesn't do any direct transactions, instead it stores the purchases in t
 
 This repository only contains the app part. It is necessary to fetch and run the backend for the app to work. The backend can be found in this [repository](https://github.com/KatlaTL/Frigo_backend)
 
-[Watch a demo of the project](https://drive.google.com/file/d/1IELgdZdAuCzZsr1nAUKOCfkiGJUkC4qG/view?usp=sharing)
+[Watch a demo of the project](https://drive.google.com/file/d/1IELgdZdAuCzZsr1nAUKOCfkiGJUkC4qG/view?usp=sharing). This demo is off an earlier version and doesn't contain the newly implemented dot indicators on the product carousel, which helps to further enhance the user experience.
 
 ## Table of Contents
 
